@@ -11,13 +11,14 @@ services:
     environment:
       - spring.datasource.url=jdbc:h2:tcp://db:1521/zeebe-monitor
       - io.zeebe.monitor.connectionString=app:26500
+      - io.zeebe.monitor.hazelcast.connection=app:5701
     ports:
     - "8080:8080"
   app:
     image: camunda/zeebe
-    environment:
-    - ZEEBE_LOG_LEVEL=debug
     volumes:
+      - ./zeebe-simple-monitor-exporter-0.13.0.jar:/usr/local/zeebe/lib/zeebe-simple-monitor-exporter-0.13.0.jar
+      - ./zeebe-hazelcast-exporter-0.2.0.jar:/usr/local/zeebe/lib/zeebe-hazelcast-exporter-0.2.0.jar
       - ./zeebe.cfg.toml:/usr/local/zeebe/conf/zeebe.cfg.toml
     ports:
     - "26500:26500"
@@ -25,6 +26,7 @@ services:
     - "26502:26502"
     - "26503:26503"
     - "26504:26504"
+    - "5701:5701"
   odfe-node1:
     image: amazon/opendistro-for-elasticsearch:0.8.0
     container_name: odfe-node1

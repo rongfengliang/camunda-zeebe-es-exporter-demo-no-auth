@@ -333,7 +333,7 @@ className = "io.zeebe.exporter.ElasticsearchExporter"
    password = "admin"
  [exporters.args.index]
   prefix = "zeebe-record"
-  createTemplate = true
+  createTemplate = false
   command = false
   event = true
   rejection = false

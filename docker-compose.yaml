@@ -6,6 +6,14 @@ services:
     ports:
       - "1521:1521"
       - "81:81"
+  operate:
+    image: camunda/operate:latest
+    ports: 
+    - "8089:8080"
+    environment: 
+    - "CAMUNDA_OPERATE_ZEEBE_BROKERCONTACTPOINT=app:26500"
+    - "CAMUNDA_OPERATE_ELASTICSEARCH_HOST=http://admin:admin@odfe-node1:9200"
+    - "CAMUNDA_OPERATE_ZEEBEELASTICSEARCH_HOST=http://admin:admin@odfe-node1:9200"
   monitor:
     image: camunda/zeebe-simple-monitor
     environment:

@@ -10,13 +10,8 @@ services:
     image: camunda/operate:latest
     ports: 
     - "8089:8080"
-    environment: 
-    - "CAMUNDA_OPERATE_ELASTICSEARCH_CLUSTERNAME=docker-cluster"
-    - "CAMUNDA_OPERATE_ZEEBE_BROKERCONTACTPOINT=app:26500"
-    - "CAMUNDA_OPERATE_ZEEBEELASTICSEARCH_CLUSTERNAME=docker-cluster"
-    - "CAMUNDA_OPERATE_ELASTICSEARCH_HOST=elasticsearch"
-    - "CAMUNDA_OPERATE_ZEEBEELASTICSEARCH_HOST=elasticsearch"
-  
+    volumes: 
+    - "./application.yml:/usr/local/operate/config/application.yml"
   monitor:
     image: camunda/zeebe-simple-monitor
     environment:

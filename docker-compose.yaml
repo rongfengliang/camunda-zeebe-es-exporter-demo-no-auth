@@ -34,7 +34,7 @@ services:
     - "26504:26504"
     - "5701:5701"
   elasticsearch:
-    image: elasticsearch:6.4.2 
+    image: elasticsearch:6.7.1 
     container_name: elasticsearch
     environment:
     - "discovery.type=single-node"

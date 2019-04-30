@@ -12,15 +12,9 @@ services:
     - "8089:8080"
     environment: 
     - "CAMUNDA_OPERATE_ZEEBE_BROKERCONTACTPOINT=app:26500"
-    - "CAMUNDA_OPERATE_ELASTICSEARCH_HOST=odfe-node1"
-    - "CAMUNDA_OPERATE_ELASTICSEARCH_CLUSTERNAME=odfe-cluster"
-    - "CAMUNDA_OPERATE_ELASTICSEARCH_USERNAME=admin"
-    - "CAMUNDA_OPERATE_ELASTICSEARCH_PASSWORD=admin"
-    - "CAMUNDA_OPERATE_ZEEBEELASTICSEARCH_HOST=odfe-node1"
-    - "CAMUNDA_OPERATE_ZEEBEELASTICSEARCH_CLUSTERNAME=odfe-cluster"
-    - "CAMUNDA_OPERATE_ZEEBEELASTICSEARCH_USERNAME=admin"
-    - "CAMUNDA_OPERATE_ZEEBEELASTICSEARCH_PASSWORD=admin"
-
+    - "CAMUNDA_OPERATE_ELASTICSEARCH_HOST=elasticsearch"
+    - "CAMUNDA_OPERATE_ZEEBEELASTICSEARCH_HOST=elasticsearch"
+  
   monitor:
     image: camunda/zeebe-simple-monitor
     environment:
@@ -42,45 +36,16 @@ services:
     - "26503:26503"
     - "26504:26504"
     - "5701:5701"
-  odfe-node1:
-    image: amazon/opendistro-for-elasticsearch:0.8.0
-    container_name: odfe-node1
+  elasticsearch:
+    image: elasticsearch:6.4.2 
+    container_name: elasticsearch
     environment:
-      - opendistro_security.ssl.http.enabled=false
-      - cluster.name=odfe-cluster
-      - bootstrap.memory_lock=true # along with the memlock settings below, disables swapping
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # minimum and maximum Java heap size, recommend setting both to 50% of system RAM
+    - "discovery.type=single-node"
     ulimits:
       memlock:
         soft: -1
         hard: -1
-    volumes:
-      - ./odfe-data1:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
-      - 9600:9600 # required for Performance Analyzer
-  odfe-node2:
-    image: amazon/opendistro-for-elasticsearch:0.8.0
-    container_name: odfe-node2
-    environment:
-      - opendistro_security.ssl.http.enabled=false
-      - cluster.name=odfe-cluster
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - discovery.zen.ping.unicast.hosts=odfe-node1
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - ./odfe-data2:/usr/share/elasticsearch/data
-  kibana:
-    image: amazon/opendistro-for-elasticsearch-kibana:0.8.0
-    container_name: odfe-kibana
-    ports:
-      - 5601:5601
-    expose:
-      - "5601"
-    environment:
-      ELASTICSEARCH_URL: http://odfe-node1:9200
+      - 9300:9300 # required for Performance Analyzer
 

@@ -1,6 +1,6 @@
-# camunda/zeebe docker-compose running
+# camunda/zeebe docker-compose running no es auth 
 
-> with opendistro-es  exporter
+> with elasticsearch  exporter 
 
 ## monitor address
 
@@ -10,7 +10,6 @@ open http://localhost:8080
 
 ## how  to run
 
-> maybe need change 777 to odfe-data1 && odfe-data1
 
 * start docker-compose
 

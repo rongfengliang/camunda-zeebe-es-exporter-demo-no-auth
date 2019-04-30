@@ -301,7 +301,7 @@ className = "io.zeebe.monitor.SimpleMonitorExporter"
 id = "elasticsearch"
 className = "io.zeebe.exporter.ElasticsearchExporter"
 [exporters.args]
-  url = "http://odfe-node1:9200"
+  url = "http://elasticsearch:9200"
   # The driver name of the jdbc driver implementation. Make sure that the implementation is
   # available in the exporter/broker classpath (add it to the broker lib folder).
   # The name is used to load the driver implementation like this
@@ -328,9 +328,6 @@ className = "io.zeebe.exporter.ElasticsearchExporter"
  delay = 5
  size = 1_000
 
- [exporters.args.authentication] 
-   username = "admin"
-   password = "admin"
  [exporters.args.index]
   prefix = "zeebe-record"
   createTemplate = false
